@@ -34,60 +34,70 @@
         }
 
         .header-bg {
-            height: 140px; background: var(--primary);
-            border-bottom-left-radius: 50% 20px;
-            border-bottom-right-radius: 50% 20px;
+            height: 150px; background: var(--primary);
+            border-bottom-left-radius: 100% 40px;
+            border-bottom-right-radius: 100% 40px;
             position: relative; 
-            display: flex; justify-content: center; align-items: center;
+            margin-bottom: 60px;
         }
 
         .login-btn {
             position: absolute; top: 15px; right: 15px;
-            background: rgba(255,255,255,0.15); color: white;
+            background: rgba(0,0,0,0.2); color: white;
             padding: 5px 12px; border-radius: 5px; font-size: 12px; cursor: pointer;
             border: 1px solid rgba(255,255,255,0.2);
         }
 
-        /* হেডার লোগো */
-        .top-logo {
-            color: white; font-size: 24px; font-family: 'Great Vibes', cursive;
-            margin-top: -20px;
-        }
-
-        /* --- ফটো পজিশন (নামের উপরে, হেডারের নিচে) --- */
-        .photo-section {
-            margin-top: -50px; /* হেডারের একটু উপরে তুলে আনার জন্য */
-            display: flex; justify-content: center; position: relative; z-index: 10;
-        }
-
         .photo-container {
             width: 130px; height: 130px;
-            border-radius: 50%; padding: 5px; background: var(--white);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            position: absolute; 
+            bottom: -65px; 
+            left: 50%; transform: translateX(-50%);
+            border-radius: 50%; padding: 4px; background: var(--white);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1); z-index: 10;
         }
         .profile-img {
             width: 100%; height: 100%; border-radius: 50%; object-fit: cover;
-            background: #e0e0e0; border: 1px solid #ddd;
+            background: #e0e0e0;
         }
 
-        /* কন্টেন্ট */
-        .content-area { padding: 15px 0 30px; }
-        h1 { margin: 10px 0 0; color: #333; font-size: 24px; font-weight: 700; }
-        .role { color: var(--primary); font-size: 12px; font-weight: 600; text-transform: uppercase; margin: 5px 0; letter-spacing: 1px; }
+        /* কন্টেন্ট এরিয়া */
+        .content-area { padding-bottom: 30px; margin-top: 10px; }
+        
+        /* লোগো (নামের উপরে) */
+        .brand-logo {
+            font-family: 'Great Vibes', cursive;
+            font-size: 35px; color: #d42020;
+            line-height: 1; margin-bottom: 5px;
+        }
+
+        h1 { margin: 5px 0 0; color: #333; font-size: 22px; font-weight: 700; }
+        .role { color: var(--primary); font-size: 12px; font-weight: 700; text-transform: uppercase; margin: 2px 0; letter-spacing: 0.5px; }
         .location { font-size: 12px; color: #777; }
         
-        /* বাটন */
-        .btn-grid { padding: 10px 20px 30px; display: flex; flex-direction: column; gap: 10px; }
+        .btn-grid { padding: 20px; display: flex; flex-direction: column; gap: 10px; }
         .btn {
             padding: 12px; border-radius: 8px; text-decoration: none; color: white;
             font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 10px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: 0.2s; font-size: 14px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: 0.2s; font-size: 14px; cursor: pointer; border: none;
         }
+        
         .bg-call { background: #003366; }
         .bg-wa { background: #25D366; }
         .bg-fb { background: #1877F2; }
         .bg-yt { background: #FF0000; }
-        .bg-share { background: #333; margin-top: 5px; }
+        .bg-share { background: #333; margin-top: 10px; }
+
+        /* TOAST MESSAGE (Share Confirmation) */
+        #toast {
+            visibility: hidden; min-width: 250px; background-color: #333; color: #fff;
+            text-align: center; border-radius: 50px; padding: 16px; position: fixed;
+            z-index: 100; left: 50%; bottom: 30px; transform: translateX(-50%); font-size: 14px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        #toast.show { visibility: visible; animation: fadein 0.5s, fadeout 0.5s 2.5s; }
+        @keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
+        @keyframes fadeout { from {bottom: 30px; opacity: 1;} to {bottom: 0; opacity: 0;} }
 
         /* --- 2. MODAL SYSTEM --- */
         .modal-overlay {
@@ -114,11 +124,11 @@
         .btn-save { width: 100%; padding: 12px; background: var(--gold); border: none; font-weight: bold; border-radius: 6px; cursor: pointer; margin-top: 10px; }
         .btn-preview { width: 100%; padding: 12px; background: var(--primary); color: white; border: none; font-weight: bold; border-radius: 6px; cursor: pointer; margin-top: 10px; }
 
-        /* --- 3. PREMIUM CARD (HIDDEN) --- */
+        /* --- 3. PREMIUM CARD (HIDDEN FOR DOWNLOAD) --- */
         .preview-content { display: flex; flex-direction: column; align-items: center; }
         
         .id-card {
-            width: 350px; height: 600px; background: #0f172a;
+            width: 350px; height: 600px; background: #0f172a; /* Dark Navy */
             border-radius: 20px; overflow: hidden; position: relative;
             font-family: 'Poppins', sans-serif; box-sizing: border-box;
             border: 4px solid #1e293b; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
@@ -163,17 +173,16 @@
 
     <div class="app-wrapper">
         <div class="header-bg">
-            <div class="top-logo">Junaid</div>
             <div class="login-btn" onclick="openLogin()"><i class="fas fa-lock"></i> Login</div>
         </div>
         
-        <div class="photo-section">
-            <div class="photo-container">
-                <img id="viewImg" class="profile-img" src="profoshonal photo.png" onerror="this.src='https://via.placeholder.com/150'">
-            </div>
+        <div class="photo-container">
+            <img id="viewImg" class="profile-img" src="profoshonal photo.png" onerror="this.src='https://via.placeholder.com/150'">
         </div>
 
         <div class="content-area">
+            <div class="brand-logo">Junaid</div>
+            
             <h1 id="viewName">Loading...</h1>
             <div class="role" id="viewTitle">...</div>
             <div class="location" id="viewLoc">...</div>
@@ -184,11 +193,11 @@
             <a href="#" id="linkWA" class="btn bg-wa" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
             <a href="#" id="linkFB" class="btn bg-fb" target="_blank"><i class="fab fa-facebook-f"></i> Facebook</a>
             <a href="#" id="linkYT" class="btn bg-yt" target="_blank"><i class="fab fa-youtube"></i> YouTube</a>
-            <button class="btn bg-share" onclick="shareProfile()">Share Profile</button>
+            <button class="btn bg-share" onclick="shareProfile()">Share Profile / Copy Link</button>
         </div>
-        <small style="color:#ccc; font-size:10px;">Member ID: <span id="dispID">DM-2025</span></small>
-        <br><br>
     </div>
+
+    <div id="toast">Link Copied to Clipboard!</div>
 
     <div id="loginModal" class="modal-overlay">
         <div class="modal-box">
@@ -219,9 +228,9 @@
             <div class="input-group"><label>Phone</label><input type="text" id="editPhone"></div>
             <div class="input-group"><label>Location</label><input type="text" id="editLoc"></div>
             
-            <div class="input-group"><label>Links</label>
+            <div class="input-group"><label>Social Links</label>
                 <input type="text" id="editWA" placeholder="WhatsApp (e.g. 8801...)" style="margin-bottom:5px;">
-                <input type="text" id="editFB" placeholder="FB Username (junaid.haque11)" style="margin-bottom:5px;">
+                <input type="text" id="editFB" placeholder="FB User (junaid.haque11)" style="margin-bottom:5px;">
                 <input type="text" id="editYT" placeholder="YT Handle (@junaidvai1)">
             </div>
 
@@ -280,13 +289,11 @@
     </div>
 
     <script>
-        // --- 1. DEFAULT DATA LOADING ---
+        // --- 1. DEFAULT DATA ---
         window.onload = function() { loadData(); }
 
         function loadData() {
-            let data = JSON.parse(localStorage.getItem('finalFixCard7'));
-            
-            // ডিফল্ট ডাটা (যাতে Undefined না দেখায়)
+            let data = JSON.parse(localStorage.getItem('finalFixCard9'));
             if(!data) {
                 data = {
                     name: "Junaid Haque", 
@@ -298,9 +305,9 @@
                     yt: "@junaidvai1", 
                     loc: "Khulna, Bangladesh",
                     id: "DM-2025-01", 
-                    site: "https://www.facebook.com/junaid.haque11" // অটোমেটিক ফেসবুক লিংকের QR হবে
+                    site: window.location.href // অটোমেটিক বর্তমান লিংক
                 };
-                localStorage.setItem('finalFixCard7', JSON.stringify(data));
+                localStorage.setItem('finalFixCard9', JSON.stringify(data));
             }
             updateUI(data);
         }
@@ -310,15 +317,12 @@
             document.getElementById('viewTitle').innerText = data.title;
             document.getElementById('viewLoc').innerText = data.loc;
             document.getElementById('viewImg').src = data.img;
-            document.getElementById('dispID').innerText = data.id;
 
-            // লিংক আপডেট
             document.getElementById('linkCall').href = `tel:${data.phone}`;
             document.getElementById('linkWA').href = `https://wa.me/${data.wa}`;
             document.getElementById('linkFB').href = `https://facebook.com/${data.fb}`;
             document.getElementById('linkYT').href = `https://youtube.com/${data.yt}`;
 
-            // ফর্ম আপডেট
             document.getElementById('editName').value = data.name;
             document.getElementById('editTitle').value = data.title;
             document.getElementById('editID').value = data.id;
@@ -330,7 +334,42 @@
             document.getElementById('siteLink').value = data.site;
         }
 
-        // --- 2. PHOTO UPLOAD ---
+        // --- 2. FIXED SHARE FUNCTION ---
+        function shareProfile() {
+            const url = window.location.href;
+            
+            // ১. শেয়ার এপিআই চেষ্টা করবে (মোবাইলের জন্য)
+            if (navigator.share) {
+                navigator.share({
+                    title: document.getElementById('viewName').innerText,
+                    text: 'Check out this Digital Profile',
+                    url: url
+                }).catch(err => {
+                    // যদি শেয়ার ক্যান্সেল করে, তবে ক্লিপবোর্ডে কপি করবে
+                    copyToClipboard(url);
+                });
+            } else {
+                // ২. ডেক্সটপ বা সাপোর্ট না থাকলে কপি করবে
+                copyToClipboard(url);
+            }
+        }
+
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                showToast();
+            }, (err) => {
+                // যদি অটো কপি না হয়, ম্যানুয়াল প্রম্পট
+                prompt("Copy this link:", text);
+            });
+        }
+
+        function showToast() {
+            var x = document.getElementById("toast");
+            x.className = "show";
+            setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+        }
+
+        // --- 3. PHOTO UPLOAD ---
         document.getElementById('photoInput').addEventListener('change', function(e) {
             const file = e.target.files[0];
             if(file){
@@ -338,18 +377,18 @@
                 reader.onload = function(evt) {
                     const base64 = evt.target.result;
                     document.getElementById('viewImg').src = base64; 
-                    let data = JSON.parse(localStorage.getItem('finalFixCard7')) || {};
+                    let data = JSON.parse(localStorage.getItem('finalFixCard9')) || {};
                     data.img = base64;
-                    localStorage.setItem('finalFixCard7', JSON.stringify(data));
+                    localStorage.setItem('finalFixCard9', JSON.stringify(data));
                     alert("Photo Uploaded!");
                 }
                 reader.readAsDataURL(file);
             }
         });
 
-        // --- 3. SAVE ---
+        // --- 4. SAVE ---
         function saveData() {
-            let current = JSON.parse(localStorage.getItem('finalFixCard7')) || {};
+            let current = JSON.parse(localStorage.getItem('finalFixCard9')) || {};
             const newData = {
                 ...current,
                 name: document.getElementById('editName').value,
@@ -362,20 +401,19 @@
                 loc: document.getElementById('editLoc').value,
                 site: document.getElementById('siteLink').value
             };
-            localStorage.setItem('finalFixCard7', JSON.stringify(newData));
+            localStorage.setItem('finalFixCard9', JSON.stringify(newData));
             updateUI(newData);
             alert("Saved!");
             closeM('editModal');
         }
 
-        // --- 4. PREVIEW & DOWNLOAD ---
+        // --- 5. PREVIEW & DOWNLOAD ---
         function openPreview() {
             closeM('editModal');
             document.getElementById('previewModal').style.display = 'flex';
             
-            const data = JSON.parse(localStorage.getItem('finalFixCard7'));
+            const data = JSON.parse(localStorage.getItem('finalFixCard9'));
             
-            // Fill Card
             document.getElementById('cardName').innerText = data.name;
             document.getElementById('cardTitle').innerText = data.title;
             document.getElementById('cardSign').innerText = data.name;
@@ -384,13 +422,11 @@
             document.getElementById('cardLoc').innerText = data.loc;
             document.getElementById('cardImg').src = data.img;
 
-            // Generate Auto QR Code
+            // Auto QR Code
             const qrBox = document.getElementById("qrcode");
             qrBox.innerHTML = "";
             new QRCode(qrBox, {
-                // এখানে অটোমেটিক ফেসবুক লিংকের QR তৈরি হবে যদি সাইট লিংক ফাঁকা থাকে
-                text: data.site ? data.site : `https://facebook.com/${data.fb}`, 
-                width: 60, height: 60,
+                text: data.site, width: 60, height: 60,
                 colorDark : "#001a33", colorLight : "#ffffff",
                 correctLevel : QRCode.CorrectLevel.H
             });
@@ -412,13 +448,13 @@
             });
         }
 
-        // --- 5. AUTH ---
+        // --- 6. AUTH ---
         function openLogin() { document.getElementById('loginModal').style.display = 'flex'; }
         function closeM(id) { document.getElementById(id).style.display = 'none'; }
         
         function checkLogin() {
             const p = document.getElementById('passInput').value;
-            const s = localStorage.getItem('userPass7') || "1234";
+            const s = localStorage.getItem('finalPass9') || "1234";
             
             if(p === s) {
                 closeM('loginModal');
@@ -430,14 +466,9 @@
         function changePass() {
             const n = document.getElementById('newPass').value;
             if(n.length < 4) { alert("Min 4 chars needed"); return; }
-            localStorage.setItem('userPass7', n);
+            localStorage.setItem('finalPass9', n);
             alert("Password Updated!");
             document.getElementById('newPass').value = "";
-        }
-
-        function shareProfile() {
-            if(navigator.share) navigator.share({title:'Profile', url:window.location.href});
-            else { navigator.clipboard.writeText(window.location.href); alert("Link Copied!"); }
         }
     </script>
 </body>
