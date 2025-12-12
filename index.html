@@ -61,7 +61,7 @@
             background: #e0e0e0;
         }
 
-        /* কন্টেন্ট এরিয়া */
+        /* কন্টেন্ট এরিয়া */
         .content-area { padding-bottom: 30px; margin-top: 10px; }
         
         /* লোগো (নামের উপরে) */
@@ -290,7 +290,10 @@
 
     <script>
         // --- 1. DEFAULT DATA ---
-        window.onload = function() { loadData(); }
+        window.onload = function() { 
+            loadData(); 
+            setupAutoSave(); // নতুন ফাংশন এখানে কল করা হলো
+        }
 
         function loadData() {
             let data = JSON.parse(localStorage.getItem('finalFixCard9'));
@@ -334,18 +337,55 @@
             document.getElementById('siteLink').value = data.site;
         }
 
+        // --- NEW: AUTO SAVE FUNCTION ---
+        // এই ফাংশনটি ইনপুট বক্সে লেখার সাথে সাথে ডাটা সেভ করবে
+        function setupAutoSave() {
+            // HTML ID এর সাথে JSON Key এর মিল করা হলো
+            const map = {
+                'editName': 'name',
+                'editTitle': 'title',
+                'editID': 'id',
+                'editPhone': 'phone',
+                'editLoc': 'loc',
+                'editWA': 'wa',
+                'editFB': 'fb',
+                'editYT': 'yt',
+                'siteLink': 'site'
+            };
+
+            // প্রতিটি ইনপুট বক্সের জন্য লিসেনার সেট করা
+            for (let inputId in map) {
+                let dataKey = map[inputId];
+                let element = document.getElementById(inputId);
+
+                if (element) {
+                    element.addEventListener('input', function() {
+                        // ১. বর্তমান ডাটা নামানো
+                        let currentData = JSON.parse(localStorage.getItem('finalFixCard9')) || {};
+                        // ২. যেই ঘরে লিখছেন শুধু সেই ডাটা আপডেট করা
+                        currentData[dataKey] = this.value;
+                        // ৩. সাথে সাথে সেভ করা
+                        localStorage.setItem('finalFixCard9', JSON.stringify(currentData));
+                        
+                        // ৪. (অপশনাল) পেছনের প্রোফাইলও সাথে সাথে আপডেট দেখাবে
+                        updateUI(currentData);
+                    });
+                }
+            }
+        }
+
         // --- 2. FIXED SHARE FUNCTION ---
         function shareProfile() {
             const url = window.location.href;
             
-            // ১. শেয়ার এপিআই চেষ্টা করবে (মোবাইলের জন্য)
+            // ১. শেয়ার এপিআই চেষ্টা করবে (মোবাইলের জন্য)
             if (navigator.share) {
                 navigator.share({
                     title: document.getElementById('viewName').innerText,
                     text: 'Check out this Digital Profile',
                     url: url
                 }).catch(err => {
-                    // যদি শেয়ার ক্যান্সেল করে, তবে ক্লিপবোর্ডে কপি করবে
+                    // যদি শেয়ার ক্যান্সেল করে, তবে ক্লিপবোর্ডে কপি করবে
                     copyToClipboard(url);
                 });
             } else {
@@ -358,7 +398,7 @@
             navigator.clipboard.writeText(text).then(() => {
                 showToast();
             }, (err) => {
-                // যদি অটো কপি না হয়, ম্যানুয়াল প্রম্পট
+                // যদি অটো কপি না হয়, ম্যানুয়াল প্রম্পট
                 prompt("Copy this link:", text);
             });
         }
@@ -386,8 +426,9 @@
             }
         });
 
-        // --- 4. SAVE ---
+        // --- 4. SAVE (Manual Button) ---
         function saveData() {
+            // Auto Save থাকায় এখন এই বাটনটি মূলত শুধু মডাল বন্ধ করতে এবং কনফার্মেশন দিতে ব্যবহার হবে
             let current = JSON.parse(localStorage.getItem('finalFixCard9')) || {};
             const newData = {
                 ...current,
