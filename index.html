@@ -177,15 +177,15 @@
         </div>
         
         <div class="photo-container">
-            <img id="viewImg" class="profile-img" src="profoshonal photo.png" onerror="this.src='https://via.placeholder.com/150'">
+            <img id="viewImg" class="profile-img" src="image_0.png" onerror="this.src='https://via.placeholder.com/150'">
         </div>
 
         <div class="content-area">
             <div class="brand-logo">Junaid</div>
             
-            <h1 id="viewName">Loading...</h1>
-            <div class="role" id="viewTitle">...</div>
-            <div class="location" id="viewLoc">...</div>
+            <h1 id="viewName">Junaid Haque</h1>
+            <div class="role" id="viewTitle">Digital Marketing Expert</div>
+            <div class="location" id="viewLoc">Khulna, Bangladesh</div>
         </div>
 
         <div class="btn-grid">
@@ -292,26 +292,31 @@
         // --- 1. DEFAULT DATA ---
         window.onload = function() { 
             loadData(); 
-            setupAutoSave(); // নতুন ফাংশন এখানে কল করা হলো
+            setupAutoSave(); 
         }
 
         function loadData() {
-            let data = JSON.parse(localStorage.getItem('finalFixCard9'));
-            if(!data) {
-                data = {
-                    name: "Junaid Haque", 
-                    title: "Digital Marketing Expert",
-                    img: "profoshonal photo.png", 
-                    phone: "+8801324311078",
-                    wa: "8801324311078", 
-                    fb: "junaid.haque11", 
-                    yt: "@junaidvai1", 
-                    loc: "Khulna, Bangladesh",
-                    id: "DM-2025-01", 
-                    site: window.location.href // অটোমেটিক বর্তমান লিংক
-                };
-                localStorage.setItem('finalFixCard9', JSON.stringify(data));
-            }
+            // আগে লোকাল স্টোরেজ চেক করার দরকার নেই, সরাসরি আপনার তথ্য দেখাবে
+            
+            let data = {
+                name: "Junaid Haque", 
+                title: "Digital Marketing Expert",
+                
+                // আপনার ছবির নাম বা লিংক (ছবিটি ফোল্ডারে থাকতে হবে)
+                img: "image_0.png", 
+                
+                phone: "+8801700000000",  // ফোন নাম্বার
+                wa: "8801700000000",     // হোয়াটসঅ্যাপ নাম্বার (কান্ট্রি কোড সহ, + ছাড়া)
+                fb: "junaid.haque11", // যেমন: junaid.haque11
+                yt: "@junaidvai1", // যেমন: @junaidvai1
+                loc: "Khulna, Bangladesh", // ঠিকানা
+                id: "DM-2025-01",         // আইডি নাম্বার
+                
+                site: window.location.href // অটোমেটিক বর্তমান লিংক
+            };
+
+            // এই লাইনগুলো যেমন আছে তেমনই থাকবে
+            localStorage.setItem('finalFixCard9', JSON.stringify(data));
             updateUI(data);
         }
 
