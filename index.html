@@ -1,8 +1,433 @@
 <!DOCTYPE html>
-<html lang="bn">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Junaid - Facebook Ads Expert </title>
-  
-  <link rel="icon" type="image/png" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhuyqC_pb_S3TysvuHmojtuwi2cGvgK32KNo5rOCQXqm5GznJOsDb2GXGkGfzWWrtMaHBKFUv4gLbr1IO69j6zjNFP7EDrIlD_RV-4EBtoE9ZOadNDqxjd0t8pZkCPxZftxqOn2Xnos4uLL3RZmu2POoxXAWwYcCtC6ug-Si5YnPlm7_g9ft6qYmgh4gbA/s16000/Gemini_Generated_Image_vv85kkvv85kkvv85-removebg-preview.png">
+    <title>Junaid Haque | Digital Identity</title>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Great+Vibes&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary: #003366; /* Navy Blue */
+            --gold: #d4af37;
+            --white: #ffffff;
+            --bg: #f0f2f5;
+        }
+
+        body {
+            background-color: var(--bg);
+            font-family: 'Poppins', sans-serif;
+            margin: 0; display: flex; justify-content: center;
+            min-height: 100vh;
+        }
+
+        /* --- 1. MOBILE PROFILE VIEW --- */
+        .app-wrapper {
+            width: 100%; max-width: 400px; background: var(--white);
+            min-height: 100vh; position: relative;
+            box-shadow: 0 0 30px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .header-bg {
+            height: 150px; background: var(--primary);
+            border-bottom-left-radius: 100% 40px;
+            border-bottom-right-radius: 100% 40px;
+            position: relative; 
+            margin-bottom: 60px;
+        }
+
+        .login-btn {
+            position: absolute; top: 15px; right: 15px;
+            background: rgba(0,0,0,0.2); color: white;
+            padding: 5px 12px; border-radius: 5px; font-size: 12px; cursor: pointer;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .photo-container {
+            width: 130px; height: 130px;
+            position: absolute; 
+            bottom: -65px; 
+            left: 50%; transform: translateX(-50%);
+            border-radius: 50%; padding: 4px; background: var(--white);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1); z-index: 10;
+        }
+        .profile-img {
+            width: 100%; height: 100%; border-radius: 50%; object-fit: cover;
+            background: #e0e0e0;
+        }
+
+        /* --- LOGO POSITION FIXED (ABOVE NAME) --- */
+        .content-area { padding-bottom: 30px; margin-top: 10px; }
+        
+        .brand-logo {
+            font-family: 'Great Vibes', cursive;
+            font-size: 35px; color: #d42020; /* Red Logo Color */
+            line-height: 1; margin-bottom: 5px;
+        }
+
+        h1 { margin: 5px 0 0; color: #333; font-size: 22px; font-weight: 700; }
+        .role { color: var(--primary); font-size: 12px; font-weight: 700; text-transform: uppercase; margin: 2px 0; letter-spacing: 0.5px; }
+        .location { font-size: 12px; color: #777; }
+        
+        .btn-grid { padding: 20px; display: flex; flex-direction: column; gap: 10px; }
+        .btn {
+            padding: 12px; border-radius: 8px; text-decoration: none; color: white;
+            font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: 0.2s; font-size: 14px;
+        }
+        
+        .bg-call { background: #003366; }
+        .bg-wa { background: #25D366; }
+        .bg-fb { background: #1877F2; }
+        .bg-yt { background: #FF0000; }
+        .bg-share { background: #333; margin-top: 10px; }
+
+        /* --- 2. MODAL SYSTEM --- */
+        .modal-overlay {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.9); z-index: 2000; justify-content: center; align-items: center;
+        }
+        .modal-box {
+            background: white; width: 90%; max-width: 420px; padding: 20px;
+            border-radius: 15px; max-height: 90vh; overflow-y: auto; text-align: center;
+        }
+
+        .input-group { margin-bottom: 12px; text-align: left; }
+        .input-group label { font-size: 11px; font-weight: bold; color: #555; display: block; margin-bottom: 5px; }
+        .input-group input {
+            width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px;
+            box-sizing: border-box; font-family: 'Poppins';
+        }
+
+        .upload-btn {
+            border: 2px dashed var(--primary); background: #f0f8ff; padding: 15px; 
+            border-radius: 8px; cursor: pointer; color: var(--primary); font-weight: 600; margin-bottom: 20px;
+        }
+
+        .btn-save { width: 100%; padding: 12px; background: var(--gold); border: none; font-weight: bold; border-radius: 6px; cursor: pointer; margin-top: 10px; }
+        .btn-preview { width: 100%; padding: 12px; background: var(--primary); color: white; border: none; font-weight: bold; border-radius: 6px; cursor: pointer; margin-top: 10px; }
+
+        /* --- 3. PREMIUM CARD (HIDDEN FOR DOWNLOAD) --- */
+        .preview-content { display: flex; flex-direction: column; align-items: center; }
+        
+        .id-card {
+            width: 350px; height: 600px; background: #0f172a; /* Dark Navy */
+            border-radius: 20px; overflow: hidden; position: relative;
+            font-family: 'Poppins', sans-serif; box-sizing: border-box;
+            border: 4px solid #1e293b; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            text-align: center; margin-bottom: 20px;
+        }
+
+        .card-top { height: 10px; background: linear-gradient(90deg, #b88746, #fdf5a6, #b88746); }
+        
+        .card-head { padding: 25px 0 10px; }
+        .c-logo { color: white; font-weight: 800; letter-spacing: 2px; font-size: 14px; }
+        .c-logo span { color: var(--gold); }
+
+        .c-photo-box {
+            width: 150px; height: 150px; margin: 10px auto; border-radius: 20px;
+            padding: 3px; background: linear-gradient(135deg, #b88746, #fdf5a6);
+        }
+        .c-photo { width: 100%; height: 100%; object-fit: cover; border-radius: 17px; background: #fff; }
+
+        .c-body { margin-bottom: 20px; }
+        .c-name { font-size: 26px; font-weight: 700; margin: 5px 0 0; color: white; }
+        .c-role { color: var(--gold); font-size: 12px; letter-spacing: 2px; text-transform: uppercase; font-weight: 600; margin-top: 5px; }
+        .c-sign { font-family: 'Great Vibes', cursive; font-size: 24px; color: rgba(255,255,255,0.6); margin-top: 5px; }
+
+        .c-info {
+            background: rgba(255,255,255,0.05); margin: 0 30px; padding: 15px;
+            border-radius: 10px; border: 1px solid rgba(255,255,255,0.1); text-align: left;
+        }
+        .c-row { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 11px; color: #cbd5e1; }
+        .c-lbl { color: #64748b; font-weight: 700; text-transform: uppercase; }
+
+        .c-footer {
+            padding: 20px 30px; display: flex; justify-content: space-between; align-items: flex-end;
+            position: absolute; bottom: 0; width: 100%; box-sizing: border-box;
+        }
+        .qr-area { background: white; padding: 4px; border-radius: 6px; width: 65px; height: 65px; display: flex; justify-content: center; align-items: center; }
+        #qrcode img { display: block; width: 100%; }
+        .auth-lbl { text-align: right; font-size: 8px; color: #64748b; text-transform: uppercase; }
+
+    </style>
+</head>
+<body>
+
+    <div class="app-wrapper">
+        <div class="header-bg">
+            <div class="login-btn" onclick="openLogin()"><i class="fas fa-lock"></i> Login</div>
+        </div>
+        
+        <div class="photo-container">
+            <img id="viewImg" class="profile-img" src="profoshonal photo.png" onerror="this.src='https://via.placeholder.com/150'">
+        </div>
+
+        <div class="content-area">
+            <div class="brand-logo">Junaid</div>
+            
+            <h1 id="viewName">Loading...</h1>
+            <div class="role" id="viewTitle">...</div>
+            <div class="location" id="viewLoc">...</div>
+        </div>
+
+        <div class="btn-grid">
+            <a href="#" id="linkCall" class="btn bg-call"><i class="fas fa-phone"></i> Call Now</a>
+            <a href="#" id="linkWA" class="btn bg-wa" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+            <a href="#" id="linkFB" class="btn bg-fb" target="_blank"><i class="fab fa-facebook-f"></i> Facebook</a>
+            <a href="#" id="linkYT" class="btn bg-yt" target="_blank"><i class="fab fa-youtube"></i> YouTube</a>
+            <button class="btn bg-share" onclick="shareProfile()">Share Profile</button>
+        </div>
+        <br>
+        <small style="color:#ccc; font-size:10px;">Member ID: <span id="dispID">DM-2025</span></small>
+    </div>
+
+    <div id="loginModal" class="modal-overlay">
+        <div class="modal-box">
+            <h3 style="color:#333;">Admin Login</h3>
+            <input type="password" id="passInput" class="input-group input" style="text-align: center; width:80%;" placeholder="Enter Password">
+            <br>
+            <button class="btn-save" style="width:80%;" onclick="checkLogin()">Login</button>
+            <p style="font-size:11px; color:#888; margin-top:10px;">Default: 1234</p>
+            <span onclick="closeM('loginModal')" style="cursor: pointer; font-size: 12px; color: #555; display: block; margin-top: 10px;">Cancel</span>
+        </div>
+    </div>
+
+    <div id="editModal" class="modal-overlay">
+        <div class="modal-box" style="text-align: left;">
+            <div style="display:flex; justify-content:space-between; margin-bottom:15px;">
+                <h3 style="margin:0;">Edit Profile</h3>
+                <span onclick="closeM('editModal')" style="cursor:pointer; font-size: 24px;">&times;</span>
+            </div>
+
+            <div class="upload-btn" onclick="document.getElementById('photoInput').click()">
+                <i class="fas fa-camera"></i> Upload Photo
+                <input type="file" id="photoInput" accept="image/*" style="display:none;">
+            </div>
+
+            <div class="input-group"><label>Name</label><input type="text" id="editName"></div>
+            <div class="input-group"><label>Designation</label><input type="text" id="editTitle"></div>
+            <div class="input-group"><label>ID Number</label><input type="text" id="editID"></div>
+            <div class="input-group"><label>Phone</label><input type="text" id="editPhone"></div>
+            <div class="input-group"><label>Location</label><input type="text" id="editLoc"></div>
+            
+            <div class="input-group"><label>Links</label>
+                <input type="text" id="editWA" placeholder="WhatsApp (e.g. 8801...)" style="margin-bottom:5px;">
+                <input type="text" id="editFB" placeholder="FB Username (junaid.haque11)" style="margin-bottom:5px;">
+                <input type="text" id="editYT" placeholder="YT Handle (@junaidvai1)">
+            </div>
+
+            <button class="btn-save" onclick="saveData()">Save Changes</button>
+            <button class="btn-preview" onclick="openPreview()">Preview & Download Card</button>
+
+            <div style="margin-top: 20px; border-top: 1px solid #eee; padding-top: 15px;">
+                <label style="font-size:11px;">Change Password</label>
+                <div style="display: flex; gap: 10px;">
+                    <input type="text" id="newPass" style="width:100%; padding:8px; border:1px solid #ccc; border-radius:5px;" placeholder="New Pass">
+                    <button onclick="changePass()" style="padding:8px; background:#333; color:white; border:none; border-radius:5px;">Set</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="previewModal" class="modal-overlay">
+        <div class="preview-content">
+            <div id="capture-card" class="id-card">
+                <div class="card-top"></div>
+                <div class="card-head">
+                    <div class="c-logo">PRO<span>CARD</span></div>
+                </div>
+                <div class="c-photo-box">
+                    <img id="cardImg" class="c-photo" src="">
+                </div>
+                <div class="c-body">
+                    <h2 id="cardName" class="c-name">Name</h2>
+                    <div id="cardTitle" class="c-role">Title</div>
+                    <div id="cardSign" class="c-sign">Sign</div>
+                </div>
+                <div class="c-info">
+                    <div class="c-row"><span class="c-lbl">ID NO</span><span id="cardID">001</span></div>
+                    <div class="c-row"><span class="c-lbl">Phone</span><span id="cardPhone">+880</span></div>
+                    <div class="c-row"><span class="c-lbl">Location</span><span id="cardLoc">BD</span></div>
+                </div>
+                <div class="c-footer">
+                    <div class="qr-area">
+                        <div id="qrcode"></div>
+                    </div>
+                    <div class="auth-lbl">
+                        Authorized Signature<br>Valid Thru: 2029
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn-save" style="width: 200px;" onclick="downloadImage()">Save Image</button>
+            <br>
+            <span onclick="closeM('previewModal')" style="color:white; cursor:pointer; margin-top:15px; display:block;">Close Preview</span>
+        </div>
+    </div>
+
+    <script>
+        // --- 1. DEFAULT DATA LOADING (AUTO FILL) ---
+        window.onload = function() { loadData(); }
+
+        function loadData() {
+            let data = JSON.parse(localStorage.getItem('finalFixCard6'));
+            
+            // ডিফল্টভাবে আপনার সব তথ্য এখানে সেট করা হলো
+            if(!data) {
+                data = {
+                    name: "Junaid Haque", 
+                    title: "Digital Marketing Expert",
+                    img: "profoshonal photo.png", 
+                    phone: "+8801324311078",
+                    wa: "8801324311078", 
+                    fb: "junaid.haque11", 
+                    yt: "@junaidvai1", 
+                    loc: "Khulna, Bangladesh",
+                    id: "DM-2025-01", 
+                    site: "https://www.facebook.com/junaid.haque11" // অটোমেটিক ফেসবুক লিংকের QR হবে
+                };
+                localStorage.setItem('finalFixCard6', JSON.stringify(data));
+            }
+            updateUI(data);
+        }
+
+        function updateUI(data) {
+            document.getElementById('viewName').innerText = data.name;
+            document.getElementById('viewTitle').innerText = data.title;
+            document.getElementById('viewLoc').innerText = data.loc;
+            document.getElementById('viewImg').src = data.img;
+            document.getElementById('dispID').innerText = data.id;
+
+            // লিংক আপডেট
+            document.getElementById('linkCall').href = `tel:${data.phone}`;
+            document.getElementById('linkWA').href = `https://wa.me/${data.wa}`;
+            document.getElementById('linkFB').href = `https://facebook.com/${data.fb}`;
+            document.getElementById('linkYT').href = `https://youtube.com/${data.yt}`;
+
+            // এডিট ফর্ম পূরণ
+            document.getElementById('editName').value = data.name;
+            document.getElementById('editTitle').value = data.title;
+            document.getElementById('editID').value = data.id;
+            document.getElementById('editPhone').value = data.phone;
+            document.getElementById('editWA').value = data.wa;
+            document.getElementById('editFB').value = data.fb;
+            document.getElementById('editYT').value = data.yt;
+            document.getElementById('editLoc').value = data.loc;
+        }
+
+        // --- 2. PHOTO UPLOAD ---
+        document.getElementById('photoInput').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if(file){
+                const reader = new FileReader();
+                reader.onload = function(evt) {
+                    const base64 = evt.target.result;
+                    document.getElementById('viewImg').src = base64; 
+                    let data = JSON.parse(localStorage.getItem('finalFixCard6')) || {};
+                    data.img = base64;
+                    localStorage.setItem('finalFixCard6', JSON.stringify(data));
+                    alert("Photo Uploaded!");
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // --- 3. SAVE ---
+        function saveData() {
+            let current = JSON.parse(localStorage.getItem('finalFixCard6')) || {};
+            const newData = {
+                ...current,
+                name: document.getElementById('editName').value,
+                title: document.getElementById('editTitle').value,
+                id: document.getElementById('editID').value,
+                phone: document.getElementById('editPhone').value,
+                wa: document.getElementById('editWA').value,
+                fb: document.getElementById('editFB').value,
+                yt: document.getElementById('editYT').value,
+                loc: document.getElementById('editLoc').value
+            };
+            localStorage.setItem('finalFixCard6', JSON.stringify(newData));
+            updateUI(newData);
+            alert("Saved!");
+            closeM('editModal');
+        }
+
+        // --- 4. PREVIEW & DOWNLOAD ---
+        function openPreview() {
+            closeM('editModal');
+            document.getElementById('previewModal').style.display = 'flex';
+            
+            const data = JSON.parse(localStorage.getItem('finalFixCard6'));
+            
+            // Fill Card
+            document.getElementById('cardName').innerText = data.name;
+            document.getElementById('cardTitle').innerText = data.title;
+            document.getElementById('cardSign').innerText = data.name;
+            document.getElementById('cardID').innerText = data.id;
+            document.getElementById('cardPhone').innerText = data.phone;
+            document.getElementById('cardLoc').innerText = data.loc;
+            document.getElementById('cardImg').src = data.img;
+
+            // Generate Auto QR Code (Facebook Link)
+            const qrBox = document.getElementById("qrcode");
+            qrBox.innerHTML = "";
+            new QRCode(qrBox, {
+                text: `https://facebook.com/${data.fb}`, // অটোমেটিক ফেসবুক লিংক QR হবে
+                width: 60, height: 60,
+                colorDark : "#001a33", colorLight : "#ffffff",
+                correctLevel : QRCode.CorrectLevel.H
+            });
+        }
+
+        function downloadImage() {
+            const element = document.getElementById('capture-card');
+            const btn = document.querySelector('.btn-save');
+            btn.innerText = "Processing...";
+
+            html2canvas(element, { 
+                scale: 4, useCORS: true, backgroundColor: null 
+            }).then(canvas => {
+                const link = document.createElement('a');
+                link.download = `Pro_Card_${document.getElementById('cardName').innerText}.png`;
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+                btn.innerText = "Save Image";
+            });
+        }
+
+        // --- 5. AUTH ---
+        function openLogin() { document.getElementById('loginModal').style.display = 'flex'; }
+        function closeM(id) { document.getElementById(id).style.display = 'none'; }
+        
+        function checkLogin() {
+            const p = document.getElementById('passInput').value;
+            const s = localStorage.getItem('finalPass6') || "1234";
+            
+            if(p === s) {
+                closeM('loginModal');
+                document.getElementById('passInput').value = "";
+                document.getElementById('editModal').style.display = 'flex';
+            } else { alert("Wrong Password!"); }
+        }
+
+        function changePass() {
+            const n = document.getElementById('newPass').value;
+            if(n.length < 4) { alert("Min 4 chars needed"); return; }
+            localStorage.setItem('finalPass6', n);
+            alert("Password Updated!");
+            document.getElementById('newPass').value = "";
+        }
+
+        function shareProfile() {
+            if(navigator.share) navigator.share({title:'Profile', url:window.location.href});
+            else { navigator.clipboard.writeText(window.location.href); alert("Link Copied!"); }
+        }
+    </script>
+</body>
+</html>
